@@ -10,13 +10,13 @@ const client_1 = require("./utils/client");
 const port = process.env.PORT || 4500;
 const app = (0, express_1.default)();
 app.use(express_1.default.json({ limit: '250mb' }));
-const makeCall = async (name, phone, email) => {
+const makeCall = async (name, phoneNumber, email) => {
     const phoneCallResponse = await client_1.retellClient.call.createPhoneCall({
         from_number: process.env.OUTBOUND_PHONE_NUMBER,
-        to_number: phone,
+        to_number: phoneNumber,
         override_agent_id: process.env.AGENT_ID,
-        metadata: { name, email },
-        retell_llm_dynamic_variables: { name, phone, email }
+        metadata: { name, email, phoneNumber },
+        retell_llm_dynamic_variables: { name, phoneNumber, email }
     });
     // console.log(phoneCallResponse);
     return phoneCallResponse;
@@ -33,8 +33,8 @@ const generalWebhook = async (req, res) => {
 };
 app.post('/makeCall', async (req, res) => {
     try {
-        const { name, phone, email } = req.body;
-        const callResponse = await makeCall(name, phone, email);
+        const { name, phoneNumber, email } = req.body;
+        const callResponse = await makeCall(name, phoneNumber, email);
         return res.status(200).json({ message: 'Call initiated successfully', data: callResponse });
     }
     catch (err) {
