@@ -35,7 +35,7 @@ app.post('/makeCall', async (req, res) => {
     try {
         const { name, phoneNumber, email } = req.body;
         const callResponse = await makeCall(name, phoneNumber, email);
-        return res.status(200).json({ message: 'Call initiated successfully', data: callResponse });
+        return res.status(200).json({ message: 'Call initiated successfully', callResponse });
     }
     catch (err) {
         if (err instanceof Error) {
