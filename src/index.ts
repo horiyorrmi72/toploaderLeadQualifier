@@ -7,13 +7,13 @@ const port = process.env.PORT || 4500;
 const app = express();
 app.use(express.json({ limit: '250mb' }));
 
-const makeCall = async (name: string, phone: string, email: string) => {
+const makeCall = async (name: string, phoneNumber: string, email: string) => {
     const phoneCallResponse = await retellClient.call.createPhoneCall({
         from_number: process.env.OUTBOUND_PHONE_NUMBER,
-        to_number: phone,
+        to_number: phoneNumber,
         override_agent_id: process.env.AGENT_ID,
-        metadata: { name, email },
-        retell_llm_dynamic_variables: { name, phone, email }
+        metadata: { name, email, phoneNumber },
+        retell_llm_dynamic_variables: { name, phoneNumber, email }
     });
     // console.log(phoneCallResponse);
     return phoneCallResponse;
@@ -31,8 +31,8 @@ const generalWebhook = async (req: Request, res: Response) => {
 
 app.post('/makeCall', async (req:Request, res:Response) => {
     try {
-        const { name, phone, email } = req.body;
-        const callResponse = await makeCall(name, phone, email);
+        const { name, phoneNumber, email } = req.body;
+        const callResponse = await makeCall(name, phoneNumber, email);
         return res.status(200).json({ message: 'Call initiated successfully', data: callResponse });
     } catch (err) {
         if (err instanceof Error) {
