@@ -1,0 +1,28 @@
+{
+  "name": "toploader_leadqualifier_outbound",
+  "version": "1.0.0",
+  "description": "outbound lead qualifier using retellai",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc":"tsc",
+    "dev": "NODE_ENV=development nodemon src/index.ts",
+    "start": "node src/index.ts"
+  },
+  "author": "horla_techs",
+  "license": "ISC",
+  "dependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express-ws": "^3.0.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-ws": "^5.0.2",
+    "retell-sdk": "^4.7.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}
