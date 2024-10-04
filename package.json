@@ -8,7 +8,7 @@
     "tsc":"tsc",
     "dev": "NODE_ENV=development nodemon src/index.ts",
     "start": "node src/index.ts",
-    "start:prod":"NODE_ENV=production node index.js"
+    "start:prod":"NODE_ENV=production node ./dist/index.js"
   },
   "author": "horla_techs",
   "license": "ISC",
