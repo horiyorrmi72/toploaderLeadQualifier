@@ -3,12 +3,13 @@ import express, { Request, Response } from 'express';
 dotenv.config();
 import { retellClient } from './utils/client';
 import axios from 'axios';
+import cron from 'node-cron';
 
 const port = process.env.PORT || 4500;
 const app = express();
 app.use(express.json({ limit: '250mb' }));
 
-const handleErrors = (err:any, res:Response) => {
+const handleErrors = (err: any, res: Response) => {
     if (err instanceof Error) {
         console.log(err.message);
         return res.status(500).json({ message: err.message });
@@ -87,6 +88,11 @@ app.post('/makeCall', async (req: Request, res: Response) => {
         return { message: 'Call initiated successfully', callResponse };
     });
 });
+
+//keeping the server alive
+cron.schedule('0 30 * * * *', () => {
+    console.log('keeping this server alive 😇');
+}, { scheduled: true })
 
 app.listen(port, () => {
     console.log(`Lead qualifier server listening on port: ${port}`);
