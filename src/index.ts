@@ -89,10 +89,14 @@ app.post('/makeCall', async (req: Request, res: Response) => {
     });
 });
 
+
 //keeping the server alive
-cron.schedule('0 30 * * * *', () => {
-    console.log('keeping this server alive 😇');
-}, { scheduled: true })
+app.get('/ping', (req, res) => {
+    return res.status(200).json({ message: 'Agent is active 😇' });
+})
+// cron.schedule('0 30 * * * *', () => {
+//     console.log('keeping this server alive 😇');
+// }, { scheduled: true })
 
 app.listen(port, () => {
     console.log(`Lead qualifier server listening on port: ${port}`);

@@ -8,7 +8,6 @@ const express_1 = __importDefault(require("express"));
 dotenv_1.default.config();
 const client_1 = require("./utils/client");
 const axios_1 = __importDefault(require("axios"));
-const node_cron_1 = __importDefault(require("node-cron"));
 const port = process.env.PORT || 4500;
 const app = (0, express_1.default)();
 app.use(express_1.default.json({ limit: '250mb' }));
@@ -77,9 +76,12 @@ app.post('/makeCall', async (req, res) => {
     });
 });
 //keeping the server alive
-node_cron_1.default.schedule('0 30 * * * *', () => {
-    console.log('keeping this server alive 😇');
-}, { scheduled: true });
+app.get('/ping', (req, res) => {
+    return res.status(200).json({ message: 'Agent is active 😇' });
+});
+// cron.schedule('0 30 * * * *', () => {
+//     console.log('keeping this server alive 😇');
+// }, { scheduled: true })
 app.listen(port, () => {
     console.log(`Lead qualifier server listening on port: ${port}`);
 });
